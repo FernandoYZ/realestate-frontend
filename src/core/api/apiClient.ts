@@ -5,12 +5,10 @@ interface ApiResponse<T> {
     message: string;
 }
 
-export const base_url = (): string => {
-    return 'http://localhost:4000/api/';
-};
+export const base_url = 'http://localhost:4000/api';
 
 export const apiClient = axios.create({
-    baseURL: base_url(),
+    baseURL: base_url,
     headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json'
