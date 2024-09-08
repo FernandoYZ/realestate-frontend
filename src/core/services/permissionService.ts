@@ -7,13 +7,28 @@ const endpoints = {
     delete: (permissionId: string) => `${base_url}/permissions/${permissionId}/`,
     show: (permissionId: string) => `${base_url}/permissions/${permissionId}/`,
 };
+console.log(base_url+'permissions/');
+
+
+export interface Permission {
+    _id: string;
+    module: string;
+    submodule: string;
+    description: string;
+    status: string;
+}
+
+interface Module {
+    title: string;
+    items: string[];
+}
 
 export async function getAllPermissions() {
     try {
         const response = await apiClient.get(endpoints.getAll);
         return response.data; 
     } catch (error) {
-        console.error('Error fetching permissions:', error);
+        console.error('Error al obtener permisos:', error);
         throw error; 
     }
 }
