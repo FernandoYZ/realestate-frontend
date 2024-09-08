@@ -2,8 +2,9 @@
 
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Sheet, SheetTrigger, SheetContent, SheetClose } from "@/components/ui/sheet";
+import { Sheet, SheetTrigger, SheetContent, SheetClose, SheetTitle, SheetDescription } from "@/components/ui/sheet";
 import MenuDesplegable from "../components/MenuDesplegable";
+import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 
 interface Module {
   title: string;
@@ -16,9 +17,14 @@ interface MobileSidebarProps {
 
 const MobileSidebar = ({ modules }: MobileSidebarProps) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [openMenuIndex, setOpenMenuIndex] = useState<number | null>(null);
 
   const toggleSidebar = () => {
     setIsOpen(!isOpen);
+  };
+
+  const handleToggleMenu = (index: number) => {
+    setOpenMenuIndex(openMenuIndex === index ? null : index);
   };
 
   return (
@@ -30,11 +36,23 @@ const MobileSidebar = ({ modules }: MobileSidebarProps) => {
           </Button>
         </SheetTrigger>
         <SheetContent side="left">
-          <div className="p-4">
+          <SheetTitle>
+            <VisuallyHidden>Menu</VisuallyHidden>
+          </SheetTitle>
+          <SheetDescription>
+            <VisuallyHidden>Aquí puedes navegar por los diferentes módulos y submódulos.</VisuallyHidden>
+          </SheetDescription>
+          <div className="p-4 h-full overflow-y-auto">
             <h1 className="text-2xl font-semibold mb-8">Sidebar</h1>
 
             {modules.map((module, index) => (
-              <MenuDesplegable key={index} title={module.title} items={module.items} />
+              <MenuDesplegable
+                key={index}
+                title={module.title}
+                items={module.items}
+                isOpen={openMenuIndex === index}
+                onToggle={() => handleToggleMenu(index)}
+              />
             ))}
 
             <SheetClose asChild>
