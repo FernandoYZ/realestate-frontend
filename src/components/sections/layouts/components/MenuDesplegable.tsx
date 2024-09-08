@@ -12,10 +12,10 @@ interface MenuDesplegableProps {
 
 const MenuDesplegable = ({ title, items, isOpen, onToggle }: MenuDesplegableProps) => {
   return (
-    <div className="mb-4">
+    <div className="mb-2">
       <button
         onClick={onToggle}
-        className="flex justify-between items-center w-full p-2 text-left text-white bg-gray-800 rounded-md hover:bg-gray-700"
+        className="flex justify-between text-sm items-center w-full p-2 text-left text-white bg-gray-800 rounded-sm hover:bg-gray-700"
       >
         <span>{title}</span>
         <ChevronDown
@@ -29,7 +29,7 @@ const MenuDesplegable = ({ title, items, isOpen, onToggle }: MenuDesplegableProp
 
       <div
         className={cn(
-          "mt-2 space-y-2 pl-4 transition-all duration-300 overflow-hidden",
+          "space-y-1 pl-4 transition-all duration-300 overflow-hidden text-sm",
           isOpen ? "max-h-screen" : "max-h-0"
         )}
       >
