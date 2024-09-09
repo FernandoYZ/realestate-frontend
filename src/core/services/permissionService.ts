@@ -7,8 +7,6 @@ const endpoints = {
     delete: (permissionId: string) => `${base_url}/permissions/${permissionId}/`,
     show: (permissionId: string) => `${base_url}/permissions/${permissionId}/`,
 };
-console.log(base_url+'permissions/');
-
 
 export interface Permission {
     _id: string;
