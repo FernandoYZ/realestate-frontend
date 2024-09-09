@@ -4,21 +4,24 @@ import "./globals.css";
 import Header from "@/components/sections/header";
 import Footer from "@/components/sections/footer";
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({ 
+  subsets: ["latin"], 
+  fallback: ["sans-serif"] 
+});
 
-export const metadata = {
+export const metadata: Metadata = {
   title: "Terranova Inmobiliaria SAC - Panel Administrativo",
   description: "Panel administrativo de Terranova Inmobiliaria SAC.",
   robots: "noindex, nofollow",
   icons: {
-    icon: '/favicon.ico'
-  }
+    icon: "/favicon.ico",
+  },
 };
 
 export const viewport = {
   width: "device-width",
   initialScale: 1,
-  shrinkToFit: "no"
+  shrinkToFit: "no",
 };
 
 export default function RootLayout({
@@ -28,14 +31,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="es">
-      <head>
-      </head>
-      <body className={`${inter.className} flex items-start justify-between`}>
-        <Header/>
+      <head />
+      <body className={`${inter.className} flex items-start justify-between bg-blue-50`}>
+        <Header />
         <main className="pl-64 w-full h-full">
           {children}
         </main>
-        <Footer/>
+        <Footer />
       </body>
     </html>
   );
