@@ -10,10 +10,15 @@ export const metadata = {
   title: "Terranova Inmobiliaria SAC - Panel Administrativo",
   description: "Panel administrativo de Terranova Inmobiliaria SAC.",
   robots: "noindex, nofollow",
-  viewport: "width=device-width, initial-scale=1, shrink-to-fit=no",
   icons: {
     icon: '/favicon.ico'
   }
+};
+
+export const viewport = {
+  width: "device-width",
+  initialScale: 1,
+  shrinkToFit: "no"
 };
 
 export default function RootLayout({
@@ -27,7 +32,7 @@ export default function RootLayout({
       </head>
       <body className={`${inter.className} flex items-start justify-between`}>
         <Header/>
-        <main className="w-full h-full">
+        <main className="pl-64 w-full h-full">
           {children}
         </main>
         <Footer/>
