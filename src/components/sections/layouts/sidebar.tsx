@@ -1,53 +1,29 @@
 'use client';
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import MobileSidebar from "./Mobile/MobileSidebar";
 import DesktopSidebar from "./Desktop/DesktopSidebar";
-import { getAllPermissions, Permission } from "@/core/services/permissionService";
-
-interface Module {
-  title: string;
-  items: string[];
-}
+import usePermissions from "@/core/hooks/usePermissions";
 
 const Sidebar = () => {
-  const [modules, setModules] = useState<Module[]>([]);
+  const modules = usePermissions();
+  const [selectedModule, setSelectedModule] = useState<string | null>(null);
 
-  useEffect(() => {
-    const fetchPermissions = async () => {
-      try {
-        const permissions: Permission[] = await getAllPermissions(); 
-        const groupedModules: { [key: string]: string[] } = {};
-
-        permissions.forEach((permission: Permission) => { 
-          if (permission.status === "Activado") {
-            const submodule = permission.submodule;
-            const moduleName = permission.module; 
-
-            if (!groupedModules[submodule]) {
-              groupedModules[submodule] = [];
-            }
-            groupedModules[submodule].push(moduleName);
-          }
-        });
-        
-        const formattedModules: Module[] = Object.entries(groupedModules).map(([submodule, items]) => ({
-          title: submodule,
-          items,
-        }));
-
-        setModules(formattedModules);
-      } catch (error) {
-        console.error("Error al obtener permisos:", error);
-      }
-    };
-
-    fetchPermissions();
-  }, []);
+  const handleItemSelect = (item: string) => {
+    setSelectedModule(item);
+  };
 
   return (
     <>
-      <MobileSidebar modules={modules} />
-      <DesktopSidebar modules={modules} />
+      <MobileSidebar
+        modules={modules}
+        selectedModule={selectedModule}
+        onItemSelect={handleItemSelect}
+      />
+      <DesktopSidebar
+        modules={modules}
+        selectedModule={selectedModule}
+        onItemSelect={handleItemSelect}
+      />
     </>
   );
 };
