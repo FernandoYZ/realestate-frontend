@@ -5,17 +5,15 @@ import { Button } from "@/components/ui/button";
 import { Sheet, SheetTrigger, SheetContent, SheetClose, SheetTitle, SheetDescription } from "@/components/ui/sheet";
 import MenuDesplegable from "../components/MenuDesplegable";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
-
-interface Module {
-  title: string;
-  items: string[];
-}
+import { Module } from "@/core/interfaces/sidebar.interface";
 
 interface MobileSidebarProps {
   modules: Module[];
+  selectedModule: string | null;
+  onItemSelect: (item: string) => void;
 }
 
-const MobileSidebar = ({ modules }: MobileSidebarProps) => {
+const MobileSidebar = ({ modules, selectedModule, onItemSelect }: MobileSidebarProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [openMenuIndex, setOpenMenuIndex] = useState<number | null>(null);
 
@@ -42,22 +40,24 @@ const MobileSidebar = ({ modules }: MobileSidebarProps) => {
           <SheetDescription>
             <VisuallyHidden>Aquí puedes navegar por los diferentes módulos y submódulos.</VisuallyHidden>
           </SheetDescription>
-          <div className="p-4 h-full overflow-y-auto">
-            <h1 className="text-2xl font-semibold mb-8">Sidebar</h1>
+          <div className="items-center justify-items-center h-full overflow-y-auto">
+            <div className="text-center text-xl font-semibold mb-8">Terranova</div>
 
-            {modules.map((module, index) => (
-              <MenuDesplegable
-                key={index}
-                title={module.title}
-                items={module.items}
-                isOpen={openMenuIndex === index}
-                onToggle={() => handleToggleMenu(index)}
-              />
-            ))}
-
-            <SheetClose asChild>
-              <Button className="w-full mt-4 bg-red-600 hover:bg-red-700">Close</Button>
-            </SheetClose>
+            {modules.map((module, index) => {
+              const IconComponent = module.icon;
+              return (
+                <MenuDesplegable
+                  key={index}
+                  title={module.title}
+                  items={module.items}
+                  isOpen={openMenuIndex === index}
+                  onToggle={() => handleToggleMenu(index)}
+                  selectedModule={selectedModule}
+                  onItemSelect={onItemSelect}
+                  icon={IconComponent ? <IconComponent /> : null} 
+                />
+              );
+            })}
           </div>
         </SheetContent>
       </Sheet>
